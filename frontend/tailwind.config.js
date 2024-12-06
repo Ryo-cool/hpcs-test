@@ -9,12 +9,14 @@ module.exports = {
     extend: {
       colors: {
         dark: {
-          bg: '#1a1a1a',
-          card: '#2d2d2d',
-          text: '#e5e5e5',
-          'text-secondary': '#a3a3a3',
-          primary: '#3b82f6',
-          'primary-hover': '#2563eb',
+          bg: '#121212',
+          card: '#1E1E1E',
+          'card-hover': '#2D2D2D',
+          text: '#FFFFFF',
+          'text-secondary': '#A0AEC0',
+          primary: '#3B82F6',
+          'primary-hover': '#2563EB',
+          border: '#2D2D2D',
         }
       },
       keyframes: {
