@@ -3,9 +3,21 @@
     "next/core-web-vitals",
     "prettier"
   ],
+  "plugins": ["prettier"],
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "requireConfigFile": false,
+    "babelOptions": {
+      "presets": ["next/babel"]
+    }
+  },
   "rules": {
+    "prettier/prettier": "error",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
-    "@typescript-eslint/explicit-module-boundary-types": "off"
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "indent": ["error", 2],
+    "no-mixed-spaces-and-tabs": "error",
+    "no-trailing-spaces": "error"
   }
 } 

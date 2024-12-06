@@ -1,0 +1,53 @@
+@layer components {
+  .question-item {
+    @apply mb-8 max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm;
+  }
+
+  .question-header {
+    @apply flex items-start gap-4 mb-6;
+  }
+
+  .question-number {
+    @apply text-2xl font-bold text-blue-600 dark:text-blue-400 min-w-[3rem];
+  }
+
+  .question-text {
+    @apply text-lg text-gray-900 dark:text-white leading-relaxed pt-1;
+  }
+
+  .options-grid {
+    @apply grid grid-cols-5 gap-2 px-4;
+  }
+
+  .option-button {
+    @apply relative py-3 px-4 rounded-lg transition-all duration-200
+           hover:shadow-sm active:transform active:scale-95
+           focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
+           bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600
+           border-2 border-gray-200 dark:border-gray-600;
+  }
+
+  .option-button.selected {
+    @apply bg-gradient-to-b border-2 border-blue-500;
+  }
+
+  .option-content {
+    @apply flex flex-col items-center gap-2;
+  }
+
+  .check-icon {
+    @apply w-4 h-4 text-blue-500 absolute top-2 left-2;
+  }
+
+  .option-label {
+    @apply text-sm font-medium text-gray-700 dark:text-gray-300;
+  }
+
+  .option-label.selected {
+    @apply text-blue-700 dark:text-blue-300;
+  }
+
+  .question-progress {
+    @apply mt-4 text-right text-sm text-gray-500 dark:text-gray-400;
+  }
+}

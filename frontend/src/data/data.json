@@ -1,0 +1,372 @@
+[
+  {
+    "question": "感情的に不安定である",
+    "dimension": "神経症傾向",
+    "reversed": false
+  },
+  {
+    "question": "心配性である",
+    "dimension": "神経症傾向",
+    "reversed": false
+  },
+  {
+    "question": "イライラしやすい",
+    "dimension": "神経症傾向",
+    "reversed": false
+  },
+  {
+    "question": "他人に対して批判的である",
+    "dimension": "神経症傾向",
+    "reversed": false
+  },
+  {
+    "question": "社交的である",
+    "dimension": "外向性",
+    "reversed": false
+  },
+  {
+    "question": "人と話すのが好きである",
+    "dimension": "外向性",
+    "reversed": false
+  },
+  {
+    "question": "注目されるのが好きである",
+    "dimension": "外向性",
+    "reversed": false
+  },
+  {
+    "question": "自信に満ちている",
+    "dimension": "外向性",
+    "reversed": false
+  },
+  {
+    "question": "計画的である",
+    "dimension": "勤勉性",
+    "reversed": false
+  },
+  {
+    "question": "几帳面である",
+    "dimension": "勤勉性",
+    "reversed": false
+  },
+  {
+    "question": "責任感が強い",
+    "dimension": "勤勉性",
+    "reversed": false
+  },
+  {
+    "question": "完璧主義である",
+    "dimension": "勤勉性",
+    "reversed": false
+  },
+  {
+    "question": "他人に共感しやすい",
+    "dimension": "協調性",
+    "reversed": false
+  },
+  {
+    "question": "他人の感情に敏感である",
+    "dimension": "協調性",
+    "reversed": false
+  },
+  {
+    "question": "他人を気遣う",
+    "dimension": "協調性",
+    "reversed": false
+  },
+  {
+    "question": "他人の立場を理解しようとする",
+    "dimension": "協調性",
+    "reversed": false
+  },
+  {
+    "question": "独創的である",
+    "dimension": "開放性",
+    "reversed": false
+  },
+  {
+    "question": "新しいアイデアを考えるのが好きである",
+    "dimension": "開放性",
+    "reversed": false
+  },
+  {
+    "question": "芸術的な感性がある",
+    "dimension": "開放性",
+    "reversed": false
+  },
+  {
+    "question": "新しい経験を求める",
+    "dimension": "開放性",
+    "reversed": false
+  },
+  {
+    "question": "自分の能力に自信がある",
+    "dimension": "勤勉性",
+    "reversed": false
+  },
+  {
+    "question": "リーダーシップを発揮する",
+    "dimension": "外向性",
+    "reversed": false
+  },
+  {
+    "question": "目標達成に向けて努力する",
+    "dimension": "勤勉性",
+    "reversed": false
+  },
+  {
+    "question": "競争心が強い",
+    "dimension": "勤勉性",
+    "reversed": false
+  },
+  {
+    "question": "他人の意見を尊重する",
+    "dimension": "協調性",
+    "reversed": false
+  },
+  {
+    "question": "協力的である",
+    "dimension": "協調性",
+    "reversed": false
+  },
+  {
+    "question": "他人の意見に耳を傾ける",
+    "dimension": "協調性",
+    "reversed": false
+  },
+  {
+    "question": "チームワークを重視する",
+    "dimension": "協調性",
+    "reversed": false
+  },
+  {
+    "question": "ストレスに強い",
+    "dimension": "神経症傾向",
+    "reversed": true
+  },
+  {
+    "question": "困難に直面しても冷静である",
+    "dimension": "神経症傾向",
+    "reversed": true
+  },
+  {
+    "question": "プレッシャーの中でもパフォーマンスを発揮する",
+    "dimension": "神経症傾向",
+    "reversed": true
+  },
+  {
+    "question": "感情をコントロールできる",
+    "dimension": "神経症傾向",
+    "reversed": true
+  },
+  {
+    "question": "新しいスキルを学ぶのが早い",
+    "dimension": "勤勉性",
+    "reversed": false
+  },
+  {
+    "question": "フィードバックを受け入れる",
+    "dimension": "協調性",
+    "reversed": false
+  },
+  {
+    "question": "自己改善に努める",
+    "dimension": "勤勉性",
+    "reversed": false
+  },
+  {
+    "question": "柔軟に考えることができる",
+    "dimension": "開放性",
+    "reversed": false
+  },
+  {
+    "question": "倫理的な行動を取る",
+    "dimension": "勤勉性",
+    "reversed": false
+  },
+  {
+    "question": "誠実である",
+    "dimension": "勤勉性",
+    "reversed": false
+  },
+  {
+    "question": "約束を守る",
+    "dimension": "勤勉性",
+    "reversed": false
+  },
+  {
+    "question": "公正である",
+    "dimension": "協調性",
+    "reversed": false
+  },
+  {
+    "question": "リスクを取ることを厭わない",
+    "dimension": "開放性",
+    "reversed": false
+  },
+  {
+    "question": "新しい挑戦を楽しむ",
+    "dimension": "開放性",
+    "reversed": false
+  },
+  {
+    "question": "変化を歓迎する",
+    "dimension": "開放性",
+    "reversed": false
+  },
+  {
+    "question": "未知の状況でも適応できる",
+    "dimension": "勤勉性",
+    "reversed": false
+  },
+  {
+    "question": "詳細に注意を払う",
+    "dimension": "勤勉性",
+    "reversed": false
+  },
+  {
+    "question": "ミスを最小限に抑える",
+    "dimension": "勤勉性",
+    "reversed": false
+  },
+  {
+    "question": "効率的に作業を進める",
+    "dimension": "勤勉性",
+    "reversed": false
+  },
+  {
+    "question": "時間を効果的に管理する",
+    "dimension": "勤勉性",
+    "reversed": false
+  },
+  {
+    "question": "他人を説得するのが得意である",
+    "dimension": "外向性",
+    "reversed": false
+  },
+  {
+    "question": "交渉が上手である",
+    "dimension": "外向性",
+    "reversed": false
+  },
+  {
+    "question": "プレゼンテーションが得意である",
+    "dimension": "外向性",
+    "reversed": false
+  },
+  {
+    "question": "影響力がある",
+    "dimension": "外向性",
+    "reversed": false
+  },
+  {
+    "question": "分析的に考えることができる",
+    "dimension": "開放性",
+    "reversed": false
+  },
+  {
+    "question": "問題解決が得意である",
+    "dimension": "開放性",
+    "reversed": false
+  },
+  {
+    "question": "論理的に考えることができる",
+    "dimension": "開放性",
+    "reversed": false
+  },
+  {
+    "question": "データを解釈するのが得意である",
+    "dimension": "開放性",
+    "reversed": false
+  },
+  {
+    "question": "創造的な解決策を考える",
+    "dimension": "開放性",
+    "reversed": false
+  },
+  {
+    "question": "新しいアイデアを提案する",
+    "dimension": "開放性",
+    "reversed": false
+  },
+  {
+    "question": "革新的なアプローチを取る",
+    "dimension": "開放性",
+    "reversed": false
+  },
+  {
+    "question": "既存の方法を改善する",
+    "dimension": "勤勉性",
+    "reversed": false
+  },
+  {
+    "question": "他人を指導するのが得意である",
+    "dimension": "外向性",
+    "reversed": false
+  },
+  {
+    "question": "メンターとしての役割を果たす",
+    "dimension": "協調性",
+    "reversed": false
+  },
+  {
+    "question": "他人の成長を支援する",
+    "dimension": "協調性",
+    "reversed": false
+  },
+  {
+    "question": "チームを効果的に管理する",
+    "dimension": "勤勉性",
+    "reversed": false
+  },
+  {
+    "question": "戦略的に考えることができる",
+    "dimension": "開放性",
+    "reversed": false
+  },
+  {
+    "question": "長期的な視野を持つ",
+    "dimension": "開放性",
+    "reversed": false
+  },
+  {
+    "question": "ビジョンを持って行動する",
+    "dimension": "開放性",
+    "reversed": false
+  },
+  {
+    "question": "全体像を把握する",
+    "dimension": "開放性",
+    "reversed": false
+  },
+  {
+    "question": "他人の感情を理解する",
+    "dimension": "協調性",
+    "reversed": false
+  },
+  {
+    "question": "共感的に対応する",
+    "dimension": "協調性",
+    "reversed": false
+  },
+  {
+    "question": "他人のニーズを察知する",
+    "dimension": "協調性",
+    "reversed": false
+  },
+  {
+    "question": "人間関係を築くのが得意である",
+    "dimension": "協調性",
+    "reversed": false
+  },
+  {
+    "question": "文化の違いを尊重する",
+    "dimension": "協調性",
+    "reversed": false
+  },
+  {
+    "question": "多様性を受け入れる",
+    "dimension": "協調性",
+    "reversed": false
+  }
+]

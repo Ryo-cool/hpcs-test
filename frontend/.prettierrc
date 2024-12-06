@@ -6,5 +6,8 @@
   "printWidth": 100,
   "bracketSpacing": true,
   "arrowParens": "avoid",
-  "endOfLine": "auto"
+  "endOfLine": "auto",
+  "useTabs": false,
+  "jsxSingleQuote": true,
+  "jsxBracketSameLine": false
 } 

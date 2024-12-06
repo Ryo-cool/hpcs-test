@@ -11,8 +11,8 @@ import (
 // validateResponses は回答データのバリデーションを行います
 func validateResponses(responses []models.Response) error {
 	validQuestionIDs := make(map[int]bool)
-	// 有効な質問IDを設定
-	for i := 1; i <= 51; i++ {
+	// 有効な質問IDを設定（74問に修正）
+	for i := 1; i <= 74; i++ {
 		validQuestionIDs[i] = true
 	}
 
@@ -48,150 +48,145 @@ func CalculateScore(c *gin.Context) {
 		return
 	}
 
-	// スコアの計算
+	// スコア計算
 	result := models.Result{
-		Neuroticism:       calculateNeuroticism(request.Responses),
-		Extraversion:      calculateExtraversion(request.Responses),
-		Conscientiousness: calculateConscientiousness(request.Responses),
-		Agreeableness:     calculateAgreeableness(request.Responses),
-		Openness:          calculateOpenness(request.Responses),
+		Neuroticism:       calculateDimensionScore(request.Responses, "neuroticism"),
+		Extraversion:      calculateDimensionScore(request.Responses, "extraversion"),
+		Conscientiousness: calculateDimensionScore(request.Responses, "conscientiousness"),
+		Agreeableness:     calculateDimensionScore(request.Responses, "agreeableness"),
+		Openness:          calculateDimensionScore(request.Responses, "openness"),
 	}
 
 	c.JSON(http.StatusOK, result)
 }
 
-// 重み付けされたスコアの計算
-func calculateWeightedScore(responses []models.Response, category string, questionIDs []int, weights map[int]float64) float64 {
-	var totalScore float64
-	var totalWeight float64
+// QuestionInfo は質問の属性を表す構造体
+type QuestionInfo struct {
+	isReverse bool
+}
 
-	for _, id := range questionIDs {
-		for _, response := range responses {
-			if response.QuestionID == id {
-				score := float64(response.Score)
-				if isReverseItem(id) {
-					score = 6 - score
-				}
-				weight := weights[id]
-				totalScore += score * weight
-				totalWeight += weight
-				break
-			}
-		}
+// getDimensionQuestions は各次元に属する質問のマップを返します
+func getDimensionQuestions(dimension string) map[int]QuestionInfo {
+	// 各次元の質問IDと逆転項目の情報
+	dimensionMap := map[string]map[int]QuestionInfo{
+		"neuroticism": {
+			1:  {isReverse: false}, // 感情的に不安定である
+			2:  {isReverse: false}, // 心配性である
+			3:  {isReverse: false}, // イライラしやすい
+			4:  {isReverse: false}, // 他人に対して批判的である
+			29: {isReverse: true},  // ストレスに強い
+			30: {isReverse: true},  // 困難に直面しても冷静である
+			31: {isReverse: true},  // プレッシャーの中でもパフォーマンスを発揮する
+			32: {isReverse: true},  // 感情をコントロールできる
+		},
+		"extraversion": {
+			5:  {isReverse: false}, // 社交的である
+			6:  {isReverse: false}, // 人と話すのが好きである
+			7:  {isReverse: false}, // 注目されるのが好きである
+			8:  {isReverse: false}, // 自信に満ちている
+			22: {isReverse: false}, // リーダーシップを発揮する
+			49: {isReverse: false}, // 他人を説得するのが得意である
+			50: {isReverse: false}, // 交渉が上手である
+			51: {isReverse: false}, // プレゼンテーションが得意である
+			52: {isReverse: false}, // 影響力がある
+			61: {isReverse: false}, // 他人を指導するのが得意である
+		},
+		"conscientiousness": {
+			9:  {isReverse: false}, // 計画的である
+			10: {isReverse: false}, // 几帳面である
+			11: {isReverse: false}, // 責任感が強い
+			12: {isReverse: false}, // 完璧主義である
+			21: {isReverse: false}, // 自分の能力に自信がある
+			23: {isReverse: false}, // 目標達成に向けて努力する
+			24: {isReverse: false}, // 競争心が強い
+			33: {isReverse: false}, // 新しいスキルを学ぶのが早い
+			35: {isReverse: false}, // 自己改善に努める
+			37: {isReverse: false}, // 倫理的な行動を取る
+			38: {isReverse: false}, // 誠実である
+			39: {isReverse: false}, // 約束を守る
+			44: {isReverse: false}, // 未知の状況でも適応できる
+			45: {isReverse: false}, // 詳細に注意を払う
+			46: {isReverse: false}, // ミスを最小限に抑える
+			47: {isReverse: false}, // 効率的に作業を進める
+			48: {isReverse: false}, // 時間を効果的に管理する
+			60: {isReverse: false}, // 既存の方法を改善する
+			64: {isReverse: false}, // チームを効果的に管理する
+		},
+		"agreeableness": {
+			13: {isReverse: false}, // 他人に共感しやすい
+			14: {isReverse: false}, // 他人の感情に敏感である
+			15: {isReverse: false}, // 他人を気遣う
+			16: {isReverse: false}, // 他人の立場を理解しようとする
+			25: {isReverse: false}, // 他人の意見を尊重する
+			26: {isReverse: false}, // 協力的である
+			27: {isReverse: false}, // 他人の意見に耳を傾ける
+			28: {isReverse: false}, // チームワークを重視する
+			34: {isReverse: false}, // フィードバックを受け入れる
+			40: {isReverse: false}, // 公正である
+			62: {isReverse: false}, // メンターとしての役割を果たす
+			63: {isReverse: false}, // 他人の成長を支援する
+			69: {isReverse: false}, // 他人の感情を理解する
+			70: {isReverse: false}, // 共感的に対応する
+			71: {isReverse: false}, // 他人のニーズを察知する
+			72: {isReverse: false}, // 人間関係を築くのが得意である
+			73: {isReverse: false}, // 文化の違いを尊重する
+			74: {isReverse: false}, // 多様性を受け入れる
+		},
+		"openness": {
+			17: {isReverse: false}, // 独創的である
+			18: {isReverse: false}, // 新しいアイデアを考えるのが好きである
+			19: {isReverse: false}, // 芸術的な感性がある
+			20: {isReverse: false}, // 新しい経験を求める
+			36: {isReverse: false}, // 柔軟に考えることができる
+			41: {isReverse: false}, // リスクを取ることを厭わない
+			42: {isReverse: false}, // 新しい挑戦を楽しむ
+			43: {isReverse: false}, // 変化を歓迎する
+			53: {isReverse: false}, // 分析的に考えることができる
+			54: {isReverse: false}, // 問題解決が得意である
+			55: {isReverse: false}, // 論理的に考えることができる
+			56: {isReverse: false}, // データを解釈するのが得意である
+			57: {isReverse: false}, // 創造的な解決策を考える
+			58: {isReverse: false}, // 新しいアイデアを提案する
+			59: {isReverse: false}, // 革新的なアプローチを取る
+			65: {isReverse: false}, // 戦略的に考えることができる
+			66: {isReverse: false}, // 長期的な視野を持つ
+			67: {isReverse: false}, // ビジョンを持って行動する
+			68: {isReverse: false}, // 全体像を把握する
+		},
 	}
 
-	if totalWeight == 0 {
+	return dimensionMap[dimension]
+}
+
+// calculateDimensionScore は各次元のスコアを計算します
+func calculateDimensionScore(responses []models.Response, dimension string) float64 {
+	// 各次元に属する質問のIDと逆転項目の情報を定義
+	dimensionQuestions := getDimensionQuestions(dimension)
+
+	var totalScore float64
+	var count int
+
+	for _, response := range responses {
+		// この次元に属する質問かチェック
+		questionInfo, exists := dimensionQuestions[response.QuestionID]
+		if !exists {
+			continue
+		}
+
+		score := float64(response.Score)
+		if questionInfo.isReverse {
+			// 逆転項目の場合、スコアを反転（6 - score）
+			score = 6 - score
+		}
+
+		totalScore += score
+		count++
+	}
+
+	if count == 0 {
 		return 0
 	}
-	return totalScore / totalWeight
-}
 
-// 各特性の重み付け係数
-var (
-	neuroticismWeights = map[int]float64{
-		1:  1.2, // 感情的に不安定である
-		2:  1.0, // 心配性である
-		3:  1.1, // イライラしやすい
-		4:  0.9, // 他人に対して批判的である
-		29: 1.3, // ストレスに強い（逆転）
-		30: 1.2, // 困難に直面しても冷静である（逆転）
-		31: 1.1, // プレッシャーの中でもパフォーマンスを発揮する（逆転）
-		32: 1.0, // 感情をコントロールできる（逆転）
-	}
-
-	extraversionWeights = map[int]float64{
-		5:  1.2, // 社交的である
-		6:  1.1, // 人と話すのが好きである
-		7:  0.9, // 注目されるのが好きである
-		8:  1.0, // 自信に満ちている
-		22: 1.1, // リーダーシップを発揮する
-		49: 1.0, // 他人を説得するのが得意である
-		50: 1.0, // 交渉が上手である
-		51: 0.9, // プレゼンテーションが得意である
-	}
-
-	conscientiousnessWeights = map[int]float64{
-		9:  1.2, // 計画的である
-		10: 1.1, // 几帳面である
-		11: 1.2, // 責任感が強い
-		12: 0.9, // 完璧主義である
-		23: 1.1, // 目標達成に向けて努力する
-		24: 0.8, // 競争心が強い
-		45: 1.0, // 詳細に注意を払う
-		46: 1.0, // ミスを最小限に抑える
-	}
-
-	agreeablenessWeights = map[int]float64{
-		13: 1.2, // 他人に共感しやすい
-		14: 1.1, // 他人の感情に敏感である
-		15: 1.2, // 他人を気遣う
-		16: 1.1, // 他人の立場を理解しようとする
-		25: 1.0, // 他人の意見を尊重する
-		26: 1.0, // 協力的である
-		27: 1.0, // 他人の意見に耳を傾ける
-		28: 0.9, // チームワークを重視する
-	}
-
-	opennessWeights = map[int]float64{
-		17: 1.2, // 独創的である
-		18: 1.1, // 新しいアイデアを考えるのが好きである
-		19: 0.9, // 芸術的な感性がある
-		20: 1.0, // 新しい経験を求める
-		41: 1.0, // リスクを取ることを厭わない
-		42: 1.1, // 新しい挑戦を楽しむ
-		43: 1.0, // 変化を歓迎する
-		44: 1.0, // 未知の状況でも適応できる
-	}
-)
-
-// 神経症傾向の計算を更新
-func calculateNeuroticism(responses []models.Response) float64 {
-	questionIDs := []int{1, 2, 3, 4, 29, 30, 31, 32}
-	return normalizeScore(calculateWeightedScore(responses, "neuroticism", questionIDs, neuroticismWeights))
-}
-
-// スコアの正規化（1-5の範囲に収める）
-func normalizeScore(score float64) float64 {
-	if score < 1 {
-		return 1
-	}
-	if score > 5 {
-		return 5
-	}
-	return score
-}
-
-// 外向性の計算
-func calculateExtraversion(responses []models.Response) float64 {
-	questionIDs := []int{5, 6, 7, 8, 22, 49, 50, 51}
-	return normalizeScore(calculateWeightedScore(responses, "extraversion", questionIDs, extraversionWeights))
-}
-
-// 誠実性の計算
-func calculateConscientiousness(responses []models.Response) float64 {
-	questionIDs := []int{9, 10, 11, 12, 23, 24, 45, 46}
-	return normalizeScore(calculateWeightedScore(responses, "conscientiousness", questionIDs, conscientiousnessWeights))
-}
-
-// 協調性の計算
-func calculateAgreeableness(responses []models.Response) float64 {
-	questionIDs := []int{13, 14, 15, 16, 25, 26, 27, 28}
-	return normalizeScore(calculateWeightedScore(responses, "agreeableness", questionIDs, agreeablenessWeights))
-}
-
-// 開放性の計算
-func calculateOpenness(responses []models.Response) float64 {
-	questionIDs := []int{17, 18, 19, 20, 41, 42, 43, 44}
-	return normalizeScore(calculateWeightedScore(responses, "openness", questionIDs, opennessWeights))
-}
-
-// 逆転項目かどうかを判定
-func isReverseItem(id int) bool {
-	reverseItems := map[int]bool{
-		29: true, // ストレスに強い
-		30: true, // 困難に直面しても冷静である
-		31: true, // プレッシャーの中でもパフォーマンスを発揮する
-		32: true, // 感情をコントロールできる
-	}
-	return reverseItems[id]
+	// 平均スコアを計算して返す
+	return totalScore / float64(count)
 }
