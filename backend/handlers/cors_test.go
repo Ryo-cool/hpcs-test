@@ -14,13 +14,28 @@ func setupRouterWithCORS() *gin.Engine {
 	gin.SetMode(gin.TestMode)
 	r := gin.Default()
 
-	// CORSの設定
-	r.Use(cors.New(cors.Config{
+	// CORSの設定を更新
+	config := cors.Config{
 		AllowOrigins:     []string{"http://localhost:3000"},
 		AllowMethods:     []string{"GET", "POST"},
 		AllowHeaders:     []string{"Origin", "Content-Type"},
 		AllowCredentials: true,
-	}))
+		AllowOriginFunc: func(origin string) bool {
+			return origin == "http://localhost:3000"
+		},
+		MaxAge: 12 * 3600,
+	}
+
+	r.Use(func(c *gin.Context) {
+		origin := c.Request.Header.Get("Origin")
+		if origin != "" && origin != "http://localhost:3000" {
+			c.AbortWithStatus(http.StatusForbidden)
+			return
+		}
+		c.Next()
+	})
+
+	r.Use(cors.New(config))
 
 	// モックハンドラーを使用
 	r.POST("/api/calculate", func(c *gin.Context) {
