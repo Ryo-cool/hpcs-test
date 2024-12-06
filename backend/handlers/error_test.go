@@ -27,7 +27,7 @@ func TestErrorResponses(t *testing.T) {
 	}{
 		{
 			name:           "不正なJSON形式",
-			requestBody:    `{"invalid json`,
+			requestBody:    `{"responses":[{"questionId":1,score":3}]}`,
 			expectedStatus: http.StatusBadRequest,
 			expectedError:  "invalid character",
 		},

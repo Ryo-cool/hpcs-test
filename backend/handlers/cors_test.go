@@ -3,6 +3,7 @@ package handlers
 import (
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"github.com/gin-contrib/cors"
@@ -21,7 +22,15 @@ func setupRouterWithCORS() *gin.Engine {
 		AllowCredentials: true,
 	}))
 
-	r.POST("/api/calculate", CalculateScore)
+	// モックハンドラーを使用
+	r.POST("/api/calculate", func(c *gin.Context) {
+		var req map[string]interface{}
+		if err := c.ShouldBindJSON(&req); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{"message": "ok"})
+	})
 	return r
 }
 
@@ -32,6 +41,7 @@ func TestCORSHeaders(t *testing.T) {
 		name          string
 		origin        string
 		method        string
+		body          string
 		expectedCode  int
 		shouldAllowed bool
 	}{
@@ -39,6 +49,7 @@ func TestCORSHeaders(t *testing.T) {
 			name:          "許可されたオリジン",
 			origin:        "http://localhost:3000",
 			method:        "POST",
+			body:          `{"responses":[{"questionId":1,"score":3}]}`,
 			expectedCode:  http.StatusOK,
 			shouldAllowed: true,
 		},
@@ -68,7 +79,13 @@ func TestCORSHeaders(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			w := httptest.NewRecorder()
-			req, _ := http.NewRequest(tt.method, "/api/calculate", nil)
+			var req *http.Request
+			if tt.method == "POST" {
+				req = httptest.NewRequest(tt.method, "/api/calculate", strings.NewReader(tt.body))
+				req.Header.Set("Content-Type", "application/json")
+			} else {
+				req = httptest.NewRequest(tt.method, "/api/calculate", nil)
+			}
 			req.Header.Set("Origin", tt.origin)
 
 			if tt.method == "OPTIONS" {

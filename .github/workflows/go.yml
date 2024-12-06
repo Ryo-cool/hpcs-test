@@ -29,3 +29,6 @@ jobs:
 
       - name: Test
         run: go test -v ./...
+        env:
+          GIN_MODE: test
+          ALLOWED_ORIGINS: http://localhost:3000
