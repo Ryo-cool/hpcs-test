@@ -12,5 +12,12 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-} 
+}
 
+body {
+  @apply bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-800 dark:to-gray-900;
+  background-attachment: fixed;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  @apply font-sans;
+}

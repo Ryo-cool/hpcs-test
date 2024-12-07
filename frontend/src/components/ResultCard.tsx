@@ -45,7 +45,13 @@ export const ResultCard: React.FC<Props> = ({ result }) => {
   });
 
   return (
-    <div className='bg-white dark:bg-dark-card rounded-xl shadow-xl p-8 border border-gray-100 dark:border-gray-800'>
+    <div
+      className={`bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-4
+                  bg-opacity-50 dark:bg-opacity-50
+                  backdrop-filter backdrop-blur-md
+                  hover:bg-opacity-75 dark:hover:bg-opacity-75
+                  hover:shadow-xl transition-all duration-200`}
+    >
       <h2 className='text-3xl font-bold text-gray-900 dark:text-white mb-8'>分析結果</h2>
 
       <div className='flex flex-col md:flex-row items-center gap-8'>
